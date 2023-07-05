@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import TodoList from "./components/TodoList";
 
 function App() {
+  const [inputValue, setInputValue] = useState("");
+  const [todoList, setTodoList] = useState([]);
+
+  const changeInputHandler = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+  };
+
+  const addListHandler = () => {
+    setTodoList([...todoList, inputValue]);
+    setInputValue("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <p>명언</p>
+      <h1>TodoList</h1>
+      <div>
+        <input type="radio" name="tag" value="공부" />
+        공부
+        <input type="radio" name="tag" value="할일" />
+        할일
+        <input type="radio" name="tag" value="살것" />
+        살것
+      </div>
+      <input
+        className="inputBar"
+        type="text"
+        onChange={changeInputHandler}
+        value={inputValue}
+      />
+      <button onClick={addListHandler}>추가</button>
+
+      <TodoList todoList={todoList} />
     </div>
   );
 }
